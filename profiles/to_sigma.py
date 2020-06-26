@@ -131,13 +131,13 @@ for key in covalent_radius.keys():
 def get_seg_DataFrame(COSMO_contents):
     # Read in the information.  Look for (X, Y, Z), and search to the end of the line, then capture until 
     # you get to a pair of two end-of-line characters, or an eol character followed by the end of string
-    sdata = re.search(r"\(X, Y, Z\)[\sa-zA-Z0-9\[\]/]+\n(.+)(\n\n|$)", COSMO_contents, re.DOTALL).group(1).rstrip()
+    sdata = re.search(r"\(X, Y, Z\)[\sa-zA-Z0-9\[\]\^\./]+\n(.+)(\n\n|$)", COSMO_contents, re.DOTALL).group(1).rstrip()
     # Annotate the columns appropriately with units(!)
     return pandas.read_csv(StringIO(sdata), names=['n','atom','x / a.u.','y / a.u.','z / a.u.','charge / e','area / A^2','charge/area / e/A^2','potential'],sep=r'\s+',engine= 'python')
 
 def get_atom_DataFrame(COSMO_contents):
     # Read in the information
-    sdata = re.search(r"!DATE[a-zA-Z0-9:\s]+\n(.+)end\s+\nend", COSMO_contents, re.DOTALL).group(1)
+    sdata = re.search(r"!DATE[a-zA-Z0-9:\s]+\n(.+)end\s*", COSMO_contents, re.DOTALL).group(1)
     # Annotate the columns appropriately with units(!)
     return pandas.read_csv(StringIO(sdata), names=['atomidentifier','x / A','y / A','z / A','?1','?2','?3','atom','?4'],sep=r'\s+',engine = 'python')
 
