@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 # Standard library
 from __future__ import division
 import re
 import os
+import sys
 from io import StringIO
 from math import exp
 from collections import namedtuple
@@ -588,8 +590,10 @@ if __name__ == '__main__':
     parser.add_argument('--n', type=int, nargs=1, required=True, choices=[1,3], help='The number of profiles to generate, either 1 or 3')
     parser.add_argument('--averaging', type=str, nargs=1, required=True, choices=['Hsieh','Mullins'], help="The scheme used to do averaging of profiles, either 'Mullins' to use f_decay = 1 and r_av = 0.8176300195 A or 'Hsieh' to use f_decay = 3.57 and r_av = sqrt(7.25/pi)")
 
-    # args = parser.parse_args()
-    args = parser.parse_args('--n 3 --averaging Mullins --inpath UD/cosmo/UFHFLCQGNIYNRP-UHFFFAOYSA-N.cosmo --outpath UFHFLCQGNIYNRP-UHFFFAOYSA-N.sigma'.split(' '))  # For testing
+    #args = parser.parse_args()
+    #args = parser.parse_args('--n 3 --averaging Mullins --inpath UD/cosmo/UFHFLCQGNIYNRP-UHFFFAOYSA-N.cosmo --outpath UFHFLCQGNIYNRP-UHFFFAOYSA-N.sigma'.split(' '))  # For testing
+    args_input = '--n 3 --averaging Mullins --inpath %s --outpath %s' % (str(sys.argv[1]), str(sys.argv[2]))
+    args = parser.parse_args(args_input.split(' '))
 
     try:
         dmol = read_Dmol3(inpath = args.inpath[0], num_profiles=args.n[0], averaging=args.averaging[0])

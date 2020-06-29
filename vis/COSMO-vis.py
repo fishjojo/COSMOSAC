@@ -16,8 +16,9 @@ def write_and_load(name, ofname = None, overwrite = True, launch = True, bgcolor
             raise ValueError('Could not match the name:'+name)
         key = match.iloc[0]
         return key
-    inchikey = name_to_inchikey(name)
-    path = os.path.join(os.path.dirname(__file__), '../profiles/UD/cosmo/'+inchikey+'.cosmo')
+    #inchikey = name_to_inchikey(name)
+    #path = os.path.join(os.path.dirname(__file__), '../profiles/UD/cosmo/'+inchikey+'.cosmo')
+    path = name
     contents = open(path).read()
     atoms = get_atom_DataFrame(contents)
     segments = get_seg_DataFrame(contents)
@@ -62,7 +63,11 @@ def write_and_load(name, ofname = None, overwrite = True, launch = True, bgcolor
         fp.write(contents)
 
     if launch:
-        os.startfile(ofname)
+        #os.startfile(ofname)
+        raise NotImplementedError
+        import subprocess, sys
+        opener = ["cmd.exe", "/C", "start"]
+        subprocess.call(opener + [ofname])
 
 if __name__ == '__main__':
     import argparse
@@ -71,10 +76,10 @@ if __name__ == '__main__':
     parser.add_argument('--ofname', type=str, required=True, nargs=1, help='The path of the output file')
     parser.add_argument('--bgcolor', type=str, required=False, nargs=1, default='0xffffff', help='The background color for the scene, specified as a string; 0xffffff would be white')
     parser.add_argument('--overwrite', action='store_const',
-                        const=True, default=False,
+                        const=True, default=True,
                         help='overwrite the output file without asking')
     parser.add_argument('--no-launch', action='store_const',
-                        const=True, default=False,
+                        const=True, default=True,
                         help="Don't launch the file")
 
     args = parser.parse_args()
