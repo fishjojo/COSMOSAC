@@ -72,6 +72,10 @@ void init_COSMO(py::module &m) {
         .def("add_profile", &DelawareProfileDatabase::add_profile)
         .def("to_JSON", &DelawareProfileDatabase::to_JSON);
 
+    py::class_<EmptyDatabase, ProfileDatabase >(m, "EmptyDatabase")
+        .def(py::init<>())
+        .def("add_profile", &EmptyDatabase::add_profile);
+
     using EigenArrayA = AbstractCOSMOModel::EigenArray;
     py::class_<AbstractCOSMOModel >(m, "AbstractCOSMOModel")
         .def("get_lngamma_comb", (EigenArrayA (AbstractCOSMOModel::*)(double, const EigenArrayA&) const) &AbstractCOSMOModel::get_lngamma_comb)

@@ -592,7 +592,7 @@ if __name__ == '__main__':
 
     #args = parser.parse_args()
     #args = parser.parse_args('--n 3 --averaging Mullins --inpath UD/cosmo/UFHFLCQGNIYNRP-UHFFFAOYSA-N.cosmo --outpath UFHFLCQGNIYNRP-UHFFFAOYSA-N.sigma'.split(' '))  # For testing
-    args_input = '--n 3 --averaging Mullins --inpath %s --outpath %s' % (str(sys.argv[1]), str(sys.argv[2]))
+    args_input = '--n 3 --averaging Hsieh --inpath %s --outpath %s' % (str(sys.argv[1]), str(sys.argv[2]))
     args = parser.parse_args(args_input.split(' '))
 
     try:
